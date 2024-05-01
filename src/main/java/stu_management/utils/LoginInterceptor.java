@@ -1,7 +1,7 @@
 package stu_management.utils;
 
 import org.springframework.web.servlet.HandlerInterceptor;
-import stu_management.DTO.UserDTO;
+import stu_management.entity.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

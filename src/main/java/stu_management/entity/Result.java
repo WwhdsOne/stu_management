@@ -1,4 +1,4 @@
-package stu_management.DTO;
+package stu_management.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

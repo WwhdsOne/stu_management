@@ -27,7 +27,7 @@ public class MvcConfig implements WebMvcConfigurer {
         //登录拦截器
         registry.addInterceptor(new LoginInterceptor())
                 .excludePathPatterns(
-                        "/user/login"
+                        "/**"
                 ).order(1);
         //刷新token拦截器
         registry.addInterceptor(new RefreshTokenInterceptor(stringRedisTemplate)).addPathPatterns("/**").order(0);

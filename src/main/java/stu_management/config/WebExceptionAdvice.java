@@ -4,7 +4,7 @@ package stu_management.config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import stu_management.DTO.Result;
+import stu_management.entity.Result;
 
 @Slf4j
 @RestControllerAdvice

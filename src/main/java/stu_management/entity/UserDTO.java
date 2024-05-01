@@ -1,4 +1,4 @@
-package stu_management.DTO;
+package stu_management.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

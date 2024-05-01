@@ -1,8 +1,9 @@
 package stu_management.Service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import stu_management.DTO.UserDTO;
-import stu_management.DTO.Result;
+import stu_management.entity.LoginForm;
+import stu_management.entity.UserDTO;
+import stu_management.entity.Result;
 
 /**
  * @author Wwh
@@ -18,5 +19,5 @@ public interface LoginService extends IService<UserDTO> {
      * @param password 密码
      * @return 登录结果
      */
-    Result login(String username, String password);
+    Result login(LoginForm loginForm);
 }

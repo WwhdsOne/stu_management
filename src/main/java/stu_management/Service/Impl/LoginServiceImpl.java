@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import stu_management.DAO.LoginMapper;
-import stu_management.DTO.UserDTO;
-import stu_management.DTO.Result;
+import stu_management.entity.LoginForm;
+import stu_management.entity.UserDTO;
+import stu_management.entity.Result;
+import stu_management.entity.UserTokenInfo;
 import stu_management.Service.LoginService;
 
 import java.util.HashMap;
@@ -33,9 +35,14 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper, UserDTO> implemen
     private StringRedisTemplate stringRedisTemplate;
 
     @Override
-    public Result login(String username, String password) {
+    public Result login(LoginForm loginForm) {
         // 创建一个 LambdaQueryWrapper 对象，用于构建查询条件
         LambdaQueryWrapper<UserDTO> queryWrapper = new LambdaQueryWrapper<>();
+
+        // 获取用户名
+        String username = loginForm.getUsername();
+        // 获取密码
+        String password = loginForm.getPassword();
 
         // 添加查询条件，用户名必须等于输入的用户名
         queryWrapper.eq(UserDTO::getUsername, username);
@@ -67,7 +74,10 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper, UserDTO> implemen
         // 设置 Redis 中用户信息的过期时间
         stringRedisTemplate.expire(LOGIN_USER_KEY + token, LOGIN_USER_TTL, TimeUnit.MINUTES);
 
+        UserTokenInfo userTokenInfo = new UserTokenInfo();
+        userTokenInfo.setToken(token);
+        userTokenInfo.setRole(userDTO.getRole());
         // 返回 token
-        return Result.ok(token);
+        return Result.ok(userTokenInfo);
     }
 }
