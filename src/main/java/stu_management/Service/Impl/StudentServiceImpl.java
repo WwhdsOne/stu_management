@@ -29,4 +29,13 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
         log.info("students: {}", students);
         return Result.ok(students);
     }
+
+    @Override
+    public Result updateStudent(Student student) {
+        boolean b = updateById(student);
+        if(b){
+            return Result.ok("更新成功");
+        }
+        return Result.fail("更新失败");
+    }
 }

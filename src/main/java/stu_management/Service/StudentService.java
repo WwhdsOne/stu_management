@@ -12,4 +12,6 @@ import stu_management.entity.Student;
  **/
 public interface StudentService extends IService<Student> {
     Result getStudents();
+
+    Result updateStudent(Student student);
 }

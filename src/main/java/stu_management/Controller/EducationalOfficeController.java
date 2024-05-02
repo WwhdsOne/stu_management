@@ -10,6 +10,7 @@ import stu_management.Service.CourseService;
 import stu_management.Service.StudentService;
 import stu_management.entity.CourseDTO;
 import stu_management.entity.Result;
+import stu_management.entity.Student;
 
 /**
  * @author Wwh
@@ -37,5 +38,10 @@ public class EducationalOfficeController {
     @PostMapping("/students")
     public Result students() {
         return studentService.getStudents();
+    }
+
+    @PostMapping("/updateStudent")
+    public Result updateById(@RequestBody Student student) {
+        return studentService.updateStudent(student);
     }
 }

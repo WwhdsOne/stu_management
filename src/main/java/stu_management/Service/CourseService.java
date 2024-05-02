@@ -3,6 +3,8 @@ package stu_management.Service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import stu_management.entity.CourseDTO;
 import stu_management.entity.Result;
+import stu_management.entity.StuCourse;
+import stu_management.entity.UserDTO;
 
 /**
  * @author Wwh
@@ -12,4 +14,8 @@ import stu_management.entity.Result;
  **/
 public interface CourseService extends IService<CourseDTO> {
     Result addCourse(CourseDTO courseDTO);
+
+    Result getByUserId();
+
+    Result chooseCourse(StuCourse stu);
 }

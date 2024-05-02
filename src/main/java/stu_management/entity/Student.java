@@ -27,15 +27,21 @@ public class Student implements Serializable {
     @TableId("user_id")
     private Integer userId;
 
+    @TableField("class_name")
+    private String className;
+
     @TableField("age")
     private Integer age;
 
     @TableField("gender")
-    private String gender;
+    private Integer gender;
 
     @TableField("name")
     private String name;
 
     @TableField(value = "enrollment_date", typeHandler = LocalDateTypeHandler.class)
     private LocalDate enrollmentDate;
+
+    @TableField("status")
+    private Integer status;
 }
