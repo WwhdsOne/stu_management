@@ -1,10 +1,7 @@
 package stu_management.Service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import stu_management.entity.CourseDTO;
-import stu_management.entity.Result;
-import stu_management.entity.StuCourse;
-import stu_management.entity.UserDTO;
+import stu_management.entity.*;
 
 /**
  * @author Wwh
@@ -20,4 +17,8 @@ public interface CourseService extends IService<CourseDTO> {
     Result chooseCourse(StuCourse stu);
 
     Result dropCourse(StuCourse stu);
+
+    Result allStuCourse();
+
+    Result updateScore(StuCourseVO stuCourseVO);
 }

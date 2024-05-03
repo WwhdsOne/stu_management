@@ -129,4 +129,25 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, CourseDTO> impl
         courseMapper.dropCourse(stu);
         return Result.ok();
     }
+
+    @Override
+    public Result allStuCourse() {
+        // 获取所有学生课程
+        List<StuCourseVO> allStuCourse = courseMapper.allStuCourse();
+        if(allStuCourse == null || allStuCourse.isEmpty()){
+            return Result.fail("没有学生选课");
+        }
+        return Result.ok(allStuCourse);
+    }
+
+    @Override
+    public Result updateScore(StuCourseVO stuCourseVO) {
+        // 更新学生成绩
+        try {
+            courseMapper.updateScore(stuCourseVO);
+        } catch (Exception e) {
+            return Result.fail("更新学生成绩失败");
+        }
+        return Result.ok();
+    }
 }

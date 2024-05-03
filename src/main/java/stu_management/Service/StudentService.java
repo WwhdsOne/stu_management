@@ -2,6 +2,7 @@ package stu_management.Service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import stu_management.entity.Result;
+import stu_management.entity.StuCourseVO;
 import stu_management.entity.Student;
 
 /**
@@ -14,4 +15,7 @@ public interface StudentService extends IService<Student> {
     Result getStudents();
 
     Result updateStudent(Student student);
+
+    Result addStudent(Student student);
+
 }

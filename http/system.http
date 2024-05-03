@@ -3,3 +3,6 @@ POST http://localhost:8081/system/dict
 
 ###
 POST http://localhost:8081/stu/courses
+
+###
+POST http://localhost:8081/college/allStuCourse
