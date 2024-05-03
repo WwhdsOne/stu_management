@@ -1,7 +1,6 @@
 package stu_management.Controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import stu_management.Service.CourseService;
 import stu_management.entity.Result;
 import stu_management.entity.StuCourse;
-import stu_management.entity.Student;
-import stu_management.entity.UserDTO;
 
 /**
  * @author Wwh
@@ -40,5 +37,10 @@ public class StudentController {
     @PostMapping("/choose")
     public Result chooseCourse(@RequestBody StuCourse stu) {
         return courseService.chooseCourse(stu);
+    }
+
+    @PostMapping("/drop")
+    public Result dropCourse(@RequestBody StuCourse stu){
+        return courseService.dropCourse(stu);
     }
 }

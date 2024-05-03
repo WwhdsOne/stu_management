@@ -13,6 +13,7 @@ import stu_management.entity.*;
 import stu_management.utils.UserHolder;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Wwh
@@ -34,7 +35,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, CourseDTO> impl
     public Result addCourse(CourseDTO courseDTO) {
         //插入课程
         boolean save = save(courseDTO);
-        if(!save){
+        if ( !save ) {
             return Result.fail("插入课程失败");
         }
         return Result.ok();
@@ -45,34 +46,87 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, CourseDTO> impl
         //根据用户id查询课程
         UserDTO userDTO = UserHolder.getUser();
         List<Long> courseById = courseMapper.getCourseById(userDTO.getId());
-        log.info("courseById:{}",courseById);
+        log.info("courseById:{}", courseById);
         return Result.ok(courseById);
     }
 
     @Override
     public Result chooseCourse(StuCourse stu) {
+        // 创建一个学生查询包装器
         LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        // 设置查询条件为学生ID
         studentLambdaQueryWrapper.eq(Student::getUserId, stu.getStuId());
+        // 从数据库中获取学生信息
         Student student = studentService.getOne(studentLambdaQueryWrapper);
-        log.info("student:{}",student);
-        if(student == null){
+        // 记录学生信息
+        log.info("student:{}", student);
+        // 如果学生不存在，返回失败结果
+        if ( student == null ) {
             return Result.fail("学生不存在");
         }
 
-        if(student.getStatus() != 1){
+        // 如果学生状态不为1，返回失败结果
+        if ( student.getStatus() != 1 ) {
             return Result.fail("学生状态异常");
         }
+        // 根据学生ID获取课程列表
         List<Long> courseById = courseMapper.getCourseById(Long.valueOf(stu.getStuId()));
-        if( !courseById.isEmpty() ){
+        // 如果课程列表不为空
+        if ( !courseById.isEmpty() ) {
+            // 创建一个课程查询包装器
             LambdaQueryWrapper<CourseDTO> courseDTOLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            // 设置查询条件为课程ID
             courseDTOLambdaQueryWrapper.in(CourseDTO::getId, courseById);
+            // 从数据库中获取已选课程列表
             List<CourseDTO> selectedCourses = courseMapper.selectList(courseDTOLambdaQueryWrapper);
+            // 计算课程学分总和
             int sum = selectedCourses.stream().mapToInt(CourseDTO::getCourseCredit).sum();
-            if(sum + courseMapper.selectById(stu.getCourseId()).getCourseCredit() > 18){
+            // 如果课程学分总和加上待选课程的学分大于18，返回失败结果
+            CourseDTO courseDTO1 = courseMapper.selectById(stu.getCourseId());
+            if ( sum + courseDTO1.getCourseCredit() > 18 ) {
                 return Result.fail("学分超出限制");
             }
+            if(courseDTO1.getPrerequisiteId() == null){
+                // 为学生选择课程
+                courseMapper.chooseCourse(stu);
+                // 返回成功结果
+                return Result.ok();
+            }
+            // 检查是否已选先修课程
+            boolean hasPrerequisite = selectedCourses.stream().anyMatch(
+                    courseDTO -> Objects.equals(courseDTO1.getPrerequisiteId(), courseDTO.getId()));
+            // 如果未选先修课程，返回失败结果
+            if ( !hasPrerequisite ) {
+                return Result.fail("未选择先修课程");
+            }
         }
+        // 为学生选择课程
         courseMapper.chooseCourse(stu);
+        // 返回成功结果
+        return Result.ok();
+    }
+
+    @Override
+    public Result dropCourse(StuCourse stu) {
+        // 根据学生ID获取课程列表
+        List<Long> courseById = courseMapper.getCourseById(Long.valueOf(stu.getStuId()));
+        if( courseById.isEmpty() ){
+            return Result.fail("学生未选课程");
+        }
+        // 创建一个课程查询包装器
+        LambdaQueryWrapper<CourseDTO> courseDTOLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        // 设置查询条件为课程ID
+        courseDTOLambdaQueryWrapper.in(CourseDTO::getId, courseById);
+        // 从数据库中获取已选课程列表
+        List<CourseDTO> selectedCourses = courseMapper.selectList(courseDTOLambdaQueryWrapper);
+        // 检查当前课程是否是已选课程的先修课程
+        boolean isPrerequisite = selectedCourses.stream().anyMatch(courseDTO -> Objects.equals(stu.getCourseId(), courseDTO.getPrerequisiteId()));
+        // 如果当前课程是已选课程的先修课程，返回错误信息
+        if (isPrerequisite) {
+            return Result.fail("当前课程是已选课程的先修课程，不能删除");
+        }
+        // 删除课程
+        courseMapper.dropCourse(stu);
         return Result.ok();
     }
 }

@@ -18,4 +18,6 @@ public interface CourseService extends IService<CourseDTO> {
     Result getByUserId();
 
     Result chooseCourse(StuCourse stu);
+
+    Result dropCourse(StuCourse stu);
 }

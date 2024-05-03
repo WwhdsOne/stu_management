@@ -1,6 +1,7 @@
 package stu_management.DAO;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -23,4 +24,7 @@ public interface CourseMapper extends BaseMapper<CourseDTO> {
 
     @Insert("insert into stu_course(user_id,course_id) value (#{stuId},#{courseId})")
     void chooseCourse(StuCourse stu);
+
+    @Delete("delete from stu_course where user_id = #{stuId} and course_id = #{courseId}")
+    void dropCourse(StuCourse stu);
 }
