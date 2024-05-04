@@ -1,12 +1,12 @@
 package stu_management.Service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import stu_management.DAO.CourseMapper;
+import org.springframework.transaction.annotation.Transactional;
+import stu_management.Mapper.CourseMapper;
 import stu_management.Service.CourseService;
 import stu_management.Service.StudentService;
 import stu_management.entity.*;
@@ -51,6 +51,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, CourseDTO> impl
     }
 
     @Override
+    @Transactional
     public Result chooseCourse(StuCourse stu) {
         // 创建一个学生查询包装器
         LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -102,6 +103,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, CourseDTO> impl
         }
         // 为学生选择课程
         courseMapper.chooseCourse(stu);
+        // 添加成绩项
+        courseMapper.addScore(stu.getId());
         // 返回成功结果
         return Result.ok();
     }
@@ -125,6 +128,13 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, CourseDTO> impl
         if (isPrerequisite) {
             return Result.fail("当前课程是已选课程的先修课程，不能删除");
         }
+        //获取这门课的成绩
+        Integer score = courseMapper.getScore(stu.getStuId(), stu.getCourseId());
+        if(score != null){
+            return Result.fail("当前课程已取得成绩，无法退课");
+        }
+        //删除课程成绩记录
+        courseMapper.dropScore(stu);
         // 删除课程
         courseMapper.dropCourse(stu);
         return Result.ok();

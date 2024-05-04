@@ -1,16 +1,15 @@
-package stu_management.DAO;
+package stu_management.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import stu_management.entity.Dict;
 import stu_management.entity.UserDTO;
 
 /**
  * @author Wwh
  * @ProjectName stu_management
- * @dateTime 2024/5/2 下午4:38
- * @description DictMapper
+ * @dateTime 2024/5/3 下午5:54
+ * @description 用户映射
  **/
 @Mapper
-public interface DictMapper extends BaseMapper<Dict> {
+public interface UserMapper extends BaseMapper<UserDTO> {
 }

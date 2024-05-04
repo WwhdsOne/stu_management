@@ -1,9 +1,6 @@
 package stu_management.Service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import stu_management.DAO.DictMapper;
-import stu_management.Service.Impl.DictServiceImpl;
 import stu_management.entity.Dict;
 import stu_management.entity.Result;
 

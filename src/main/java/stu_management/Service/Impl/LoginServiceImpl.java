@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import stu_management.DAO.LoginMapper;
+import stu_management.Mapper.LoginMapper;
 import stu_management.entity.LoginForm;
 import stu_management.entity.UserDTO;
 import stu_management.entity.Result;

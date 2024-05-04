@@ -5,11 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import stu_management.DAO.StudentMapper;
-import stu_management.DAO.UserMapper;
+import stu_management.Mapper.StudentMapper;
+import stu_management.Mapper.UserMapper;
 import stu_management.Service.StudentService;
 import stu_management.entity.Result;
-import stu_management.entity.StuCourseVO;
 import stu_management.entity.Student;
 import stu_management.entity.UserDTO;
 

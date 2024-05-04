@@ -1,4 +1,4 @@
-package stu_management.DAO;
+package stu_management.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;

@@ -2,19 +2,15 @@ package stu_management.Service.Impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-import stu_management.DAO.DictMapper;
+import stu_management.Mapper.DictMapper;
 import stu_management.Service.DictService;
 import stu_management.entity.Dict;
 import stu_management.entity.Result;
 import stu_management.entity.UserDTO;
-import stu_management.utils.UserHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

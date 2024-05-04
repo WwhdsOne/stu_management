@@ -1,4 +1,4 @@
-package stu_management.DAO;
+package stu_management.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.*;
@@ -20,7 +20,7 @@ public interface CourseMapper extends BaseMapper<CourseDTO> {
     @Select("select course_id from stu_course where stu_id = #{userId}")
     List<Long> getCourseById(Long userId);
 
-    @Insert("insert into stu_course(stu_id,course_id) value (#{stuId},#{courseId})")
+
     void chooseCourse(StuCourse stu);
 
     @Delete("delete from stu_course where stu_id = #{stuId} and course_id = #{courseId}")
@@ -36,4 +36,12 @@ public interface CourseMapper extends BaseMapper<CourseDTO> {
 
     @Update("update stu_course_score set score = #{score} where id = #{id}")
     void updateScore(StuCourseVO stuCourseVO);
+
+    @Insert("insert into stu_course_score(stu_score_id,score) value (#{id},null)")
+    void addScore(Integer id);
+
+
+    Integer getScore(@Param("stuId") Integer stuId, @Param("courseId") Integer courseId);
+
+    void dropScore(StuCourse stu);
 }
