@@ -19,10 +19,14 @@ import stu_management.entity.Student;
 @RequestMapping("/college")
 @Slf4j
 public class CollegeController {
+
+    private final StudentService studentService;
+    private final CourseService courseService;
     @Autowired
-    private StudentService studentService;
-    @Autowired
-    private CourseService courseService;
+    public CollegeController(StudentService studentService,CourseService courseService) {
+        this.studentService = studentService;
+        this.courseService = courseService;
+    }
     @PostMapping("/addStudent")
     public Result addStudent(@RequestBody Student student) {
         return studentService.addStudent(student);

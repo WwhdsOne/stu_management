@@ -10,13 +10,13 @@
     <delete id="dropScore">
         delete
         from stu_course_score
-        where stu_score_id = (select id from stu_course where stu_id = #{stuId} and course_id = #{courseId})
+        where stu_course_id = (select id from stu_course where stu_id = #{stuId} and course_id = #{courseId})
     </delete>
     <select id="getScore" resultType="java.lang.Integer">
         select score
         from stu_course_score,stu_course
         where stu_id = #{stuId}
           and course_id = #{courseId}
-          and stu_course_score.stu_score_id = stu_course.id
+          and stu_course_score.stu_course_id = stu_course.id
     </select>
 </mapper>

@@ -18,8 +18,11 @@ import stu_management.Service.LoginService;
 @Slf4j
 public class LoginController {
 
-    @Autowired
     private LoginService loginService;
+    @Autowired
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
 
 
 

@@ -23,11 +23,13 @@ import stu_management.entity.Student;
 @Slf4j
 public class EducationalOfficeController {
 
+    private final StudentService studentService;
+    private final CourseService courseService;
     @Autowired
-    private CourseService courseService;
-
-    @Autowired
-    private StudentService studentService;
+    public EducationalOfficeController(StudentService studentService,CourseService courseService) {
+        this.studentService = studentService;
+        this.courseService = courseService;
+    }
 
     @PostMapping("/addCourse")
     public Result addCourse(@RequestBody CourseDTO courseDTO) {

@@ -30,14 +30,14 @@ public interface CourseMapper extends BaseMapper<CourseDTO> {
             "FROM stu_course g\n" +
             "JOIN students s ON g.stu_id = s.user_id\n" +
             "JOIN course c ON g.course_id = c.id\n" +
-            "JOIN stu_course_score sc ON g.id = sc.stu_score_id\n" +
+            "JOIN stu_course_score sc ON g.id = sc.stu_course_id\n" +
             "WHERE g.stu_id = s.user_id AND g.course_id = c.id")
     List<StuCourseVO> allStuCourse();
 
     @Update("update stu_course_score set score = #{score} where id = #{id}")
     void updateScore(StuCourseVO stuCourseVO);
 
-    @Insert("insert into stu_course_score(stu_score_id,score) value (#{id},null)")
+    @Insert("insert into stu_course_score(stu_course_id,score) value (#{id},null)")
     void addScore(Integer id);
 
 
