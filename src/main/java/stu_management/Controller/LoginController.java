@@ -18,14 +18,16 @@ import stu_management.Service.LoginService;
 @Slf4j
 public class LoginController {
 
-    private LoginService loginService;
+    private final LoginService loginService;
     @Autowired
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
-
-
-
+    /**
+     * 登录
+     * @param loginForm
+     * @return Result
+     */
     @PostMapping("/login")
     public Result login(@RequestBody LoginForm loginForm) {
         log.info("loginForm: {}", loginForm);

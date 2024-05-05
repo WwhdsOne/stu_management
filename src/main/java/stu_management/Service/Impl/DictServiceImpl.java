@@ -28,8 +28,13 @@ import static stu_management.Constants.RedisConstants.LOGIN_USER_KEY;
 @Service
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
+
+    private final StringRedisTemplate stringRedisTemplate;
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    public DictServiceImpl(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+
+    }
     @Override
     public Result getDictJson() {
         List<Dict> list = list();

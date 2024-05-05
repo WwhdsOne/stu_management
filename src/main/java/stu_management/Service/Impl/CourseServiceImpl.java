@@ -25,11 +25,14 @@ import java.util.Objects;
 @Slf4j
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, CourseDTO> implements CourseService {
 
-    @Autowired
-    private CourseMapper courseMapper;
+    private final CourseMapper courseMapper;
 
+    private final StudentService studentService;
     @Autowired
-    private StudentService studentService;
+    public CourseServiceImpl(CourseMapper courseMapper, StudentService studentService) {
+        this.courseMapper = courseMapper;
+        this.studentService = studentService;
+    }
 
     @Override
     public Result addCourse(CourseDTO courseDTO) {

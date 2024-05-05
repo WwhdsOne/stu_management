@@ -31,8 +31,12 @@ import static stu_management.Constants.RedisConstants.LOGIN_USER_TTL;
 @Service
 public class LoginServiceImpl extends ServiceImpl<LoginMapper, UserDTO> implements LoginService {
 
+    private final StringRedisTemplate stringRedisTemplate;
+
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    public LoginServiceImpl(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     @Override
     public Result login(LoginForm loginForm) {

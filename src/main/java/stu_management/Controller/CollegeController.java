@@ -13,7 +13,7 @@ import stu_management.entity.Student;
  * @author Wwh
  * @ProjectName stu_management
  * @dateTime 2024/5/3 下午5:51
- * @description 学院
+ * @description 学院控制器
  **/
 @RestController
 @RequestMapping("/college")

@@ -21,24 +21,45 @@ import stu_management.entity.StuCourse;
 @Slf4j
 public class StudentController {
 
+    private final CourseService courseService;
     @Autowired
-    private CourseService courseService;
+    public StudentController(CourseService courseService) {
+        this.courseService = courseService;
+    }
 
+    /**
+     * 获取学生课程
+     * @return Result
+     */
     @PostMapping("/getStuCourse")
     public Result getStuCourse() {
         return courseService.getByUserId();
     }
 
+    /**
+     * 获取所有课程
+     * @return Result
+     */
     @PostMapping("/courses")
     public Result getAllCourses() {
         return Result.ok(courseService.list());
     }
 
+    /**
+     * 选课
+     * @param stu
+     * @return Result
+     */
     @PostMapping("/choose")
     public Result chooseCourse(@RequestBody StuCourse stu) {
         return courseService.chooseCourse(stu);
     }
 
+    /**
+     * 退课
+     * @param stu
+     * @return Result
+     */
     @PostMapping("/drop")
     public Result dropCourse(@RequestBody StuCourse stu){
         return courseService.dropCourse(stu);

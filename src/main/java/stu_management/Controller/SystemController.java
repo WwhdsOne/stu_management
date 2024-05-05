@@ -23,14 +23,27 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class SystemController {
 
-    @Autowired
-    DictService dictService;
 
+    private final DictService dictService;
+    @Autowired
+    public SystemController(DictService dictService) {
+        this.dictService = dictService;
+    }
+
+    /**
+     * 获取字典
+     * @return Result
+     */
     @PostMapping("/dict")
     public Result getDictJson() {
         return dictService.getDictJson();
     }
 
+    /**
+     * 获取用户信息
+     * @param request
+     * @return Result
+     */
     @PostMapping("/getUserInfo")
     public Result getUserInfo(HttpServletRequest request) {
         return dictService.getUserInfo(request);

@@ -2,6 +2,7 @@ package stu_management.utils;
 
 import cn.hutool.core.bean.BeanUtil;
 import jodd.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import stu_management.Constants.RedisConstants;

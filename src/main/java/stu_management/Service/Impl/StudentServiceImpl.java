@@ -22,45 +22,67 @@ import java.util.List;
  **/
 @Service
 @Slf4j
-public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> implements StudentService {
+public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements StudentService {
+
+    private UserMapper userMapper;
+
 
     @Autowired
-    private UserMapper userMapper;
+    public StudentServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Override
     public Result getStudents() {
+        // 获取所有学生列表
         List<Student> students = list();
-        if(students == null || students.isEmpty() ){
+        // 如果学生列表为空，返回失败结果
+        if ( students == null || students.isEmpty() ) {
             return Result.fail("没有学生");
         }
+        // 记录学生信息
         log.info("students: {}", students);
+        // 返回成功结果，包含学生列表
         return Result.ok(students);
     }
 
     @Override
     public Result updateStudent(Student student) {
+        // 更新学生信息，如果更新成功返回true，否则返回false
         boolean b = updateById(student);
-        if(b){
+        // 如果更新成功，返回成功结果
+        if ( b ) {
             return Result.ok("更新成功");
         }
+        // 如果更新失败，返回失败结果
         return Result.fail("更新失败");
     }
 
     @Override
     @Transactional
     public Result addStudent(Student student) {
+        // 创建一个新的UserDTO对象
         UserDTO userDTO = new UserDTO();
+        // 设置用户名为学生编号
         userDTO.setUsername(student.getStudentNo());
+        // 设置默认密码
         userDTO.setPassword("123456");
+        // 设置角色为4（假设4代表学生角色）
         userDTO.setRole(4);
+        // 插入新的用户记录，返回插入的记录数
         int insert = userMapper.insert(userDTO);
-        if(insert > 0){
+        // 如果插入成功
+        if ( insert > 0 ) {
+            // 设置学生的用户ID为新插入的用户记录的ID
             student.setUserId(Math.toIntExact(userDTO.getId()));
+            // 保存学生信息，如果保存成功返回true，否则返回false
             boolean save = save(student);
-            if(save){
+            // 如果保存成功，返回成功结果
+            if ( save ) {
                 return Result.ok("添加成功");
             }
         }
+        // 如果添加失败，返回失败结果
         return Result.fail("添加失败");
     }
 

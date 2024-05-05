@@ -31,17 +31,31 @@ public class EducationalOfficeController {
         this.courseService = courseService;
     }
 
+    /**
+     * 添加学生
+     * @param courseDTO
+     * @return Result
+     */
     @PostMapping("/addCourse")
     public Result addCourse(@RequestBody CourseDTO courseDTO) {
         log.info("courseDTO: {}", courseDTO);
         return courseService.addCourse(courseDTO);
     }
 
+    /**
+     * 获取所有学生
+     * @return Result
+     */
     @PostMapping("/students")
     public Result students() {
         return studentService.getStudents();
     }
 
+    /**
+     * 更新学生信息
+     * @param student
+     * @return Result
+     */
     @PostMapping("/updateStudent")
     public Result updateById(@RequestBody Student student) {
         return studentService.updateStudent(student);
