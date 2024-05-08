@@ -5,6 +5,8 @@ import stu_management.entity.LoginForm;
 import stu_management.entity.UserDTO;
 import stu_management.entity.Result;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Wwh
  * @ProjectName stu_management
@@ -15,9 +17,10 @@ import stu_management.entity.Result;
 public interface LoginService extends IService<UserDTO> {
     /**
      * 登录
-     * @param username 用户名
-     * @param password 密码
+     * @param loginForm 登录表单
      * @return 登录结果
      */
     Result login(LoginForm loginForm);
+
+    Result updatePassword(String password);
 }

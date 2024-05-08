@@ -8,13 +8,17 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import stu_management.Mapper.LoginMapper;
 import stu_management.entity.LoginForm;
 import stu_management.entity.UserDTO;
 import stu_management.entity.Result;
 import stu_management.entity.UserTokenInfo;
 import stu_management.Service.LoginService;
+import stu_management.utils.UserHolder;
+import sun.security.util.Password;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -83,5 +87,20 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper, UserDTO> implemen
         userTokenInfo.setRole(userDTO.getRole());
         // 返回 token
         return Result.ok(userTokenInfo);
+    }
+
+    @Override
+    @Transactional
+    public Result updatePassword(String password) {
+        UserDTO user = UserHolder.getUser();
+        if(password.isEmpty() || password.length() > 15){
+            return Result.fail("密码不能为空或长度不能超过15位");
+        }
+        user.setPassword(password);
+        boolean b = updateById(user);
+        if( b ){
+            return Result.ok("密码修改成功");
+        }
+        return Result.fail("密码修改失败");
     }
 }
